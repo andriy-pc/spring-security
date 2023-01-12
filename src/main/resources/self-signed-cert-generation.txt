@@ -1,0 +1,1 @@
+keytool -genkeypair -alias my-self-signed -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore self-signed.p12 -validity 3650
