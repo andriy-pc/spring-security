@@ -1,3 +1,7 @@
+server:
+  servlet:
+    context-path: /jwt-demo/v1
+
 spring:
   datasource:
     url: jdbc:h2:mem:mydb
