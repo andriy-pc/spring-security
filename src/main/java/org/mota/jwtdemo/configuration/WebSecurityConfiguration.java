@@ -39,15 +39,15 @@ public class WebSecurityConfiguration {
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests((authorize) ->
             authorize
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/hello-world/**").authenticated()
+                .requestMatchers("/auth/register").permitAll()
+                .requestMatchers("/auth/login").permitAll()
+                .requestMatchers("/users/**").authenticated()
                 .requestMatchers("/**").authenticated()
         )
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .headers().frameOptions()
         .sameOrigin().and() //to display h2-console //TODO: enable this header only for h2-console EP
-        .formLogin().and()
         .logout().and()
         .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
         .addFilter(jwtCreatingFilter);
