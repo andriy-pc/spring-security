@@ -20,21 +20,14 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.security.web.access.intercept.RequestMatcherDelegatingAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
-
-  private JwtCreatingFilter jwtCreatingFilter;
   private final AuthorizationFilter authorizationFilter;
-
-  @Autowired
-  @Lazy
-  private void setJwtCreatingFilter(JwtCreatingFilter jwtCreatingFilter) {
-    this.jwtCreatingFilter = jwtCreatingFilter;
-  }
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -55,8 +48,8 @@ public class WebSecurityConfiguration {
         .sameOrigin()
         .and() //to display h2-console //TODO: enable this header only for h2-console EP
         .logout().and()
-        .addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class)
-        .addFilter(jwtCreatingFilter);
+        .addFilterBefore(authorizationFilter,
+            org.springframework.security.web.access.intercept.AuthorizationFilter.class);
 
     return httpSecurity.build();
   }
