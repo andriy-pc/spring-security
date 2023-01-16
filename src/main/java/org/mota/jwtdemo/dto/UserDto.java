@@ -12,6 +12,7 @@ import org.mota.jwtdemo.configuration.serialization.PasswordSerializer;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
+
   private Integer id;
   private String firstName;
   private String secondName;

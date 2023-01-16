@@ -12,4 +12,8 @@ public enum RolesEnum {
 
   private final String name;
 
+  public String getNameWithoutPrefix() {
+    return name.substring(name.lastIndexOf("_") + 1);
+  }
+
 }

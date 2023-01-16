@@ -1,12 +1,12 @@
 package org.mota.jwtdemo.configuration;
 
+import static org.mota.jwtdemo.constants.RolesEnum.ROLE_ADMIN;
+import static org.mota.jwtdemo.constants.RolesEnum.ROLE_USER;
+
 import lombok.RequiredArgsConstructor;
 import org.mota.jwtdemo.controller.filter.AuthorizationFilter;
-import org.mota.jwtdemo.controller.filter.JwtCreatingFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,13 +20,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.security.web.access.intercept.RequestMatcherDelegatingAuthorizationManager;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfiguration {
+
   private final AuthorizationFilter authorizationFilter;
 
   @Bean
@@ -37,9 +36,10 @@ public class WebSecurityConfiguration {
             authorize
                 .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/users/details").access(authorityAuthorizationManager("USER"))
+                .requestMatchers("/users/details")
+                .access(authorityAuthorizationManager(ROLE_USER.getNameWithoutPrefix()))
                 .requestMatchers("/users/admin-details")
-                .access(authorityAuthorizationManager("ADMIN"))
+                .access(authorityAuthorizationManager(ROLE_ADMIN.getNameWithoutPrefix()))
                 .requestMatchers("/**").authenticated()
         )
         .sessionManagement(

@@ -14,13 +14,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
- * <a href="https://github.com/ali-bouali/spring-boot-3-jwt-security/blob/main/src/main/java/com/alibou/security/config/JwtService.java">Resource</a>
+ * <a
+ * href="https://github.com/ali-bouali/spring-boot-3-jwt-security/blob/main/src/main/java/com/alibou/security/config/JwtService.java">Resource</a>
  */
 
 @Service
 public class JwtService {
 
   private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+
+  private static Map extractUserRoles(UserDetails userDetails) {
+    return userDetails.getAuthorities()
+        .stream().collect(Collectors.groupingBy(Object::toString, Collectors.toList()));
+  }
 
   public String extractUsername(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -33,11 +39,6 @@ public class JwtService {
 
   public String generateToken(UserDetails userDetails) {
     return generateToken(extractUserRoles(userDetails), userDetails);
-  }
-
-  private static Map extractUserRoles(UserDetails userDetails) {
-    return userDetails.getAuthorities()
-        .stream().collect(Collectors.groupingBy(Object::toString, Collectors.toList()));
   }
 
   public String generateToken(

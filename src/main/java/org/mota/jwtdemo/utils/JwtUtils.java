@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * <a href="https://github.com/koushikkothagal/spring-security-jwt/blob/master/src/main/java/io/javabrains/springsecurityjwt/util/JwtUtil.java">Resource</a>
+ * <a
+ * href="https://github.com/koushikkothagal/spring-security-jwt/blob/master/src/main/java/io/javabrains/springsecurityjwt/util/JwtUtil.java">Resource</a>
  */
 @Profile("jwt-old")
 public class JwtUtils {
