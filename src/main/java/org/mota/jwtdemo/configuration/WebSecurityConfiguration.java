@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.mota.jwtdemo.controller.filter.AuthorizationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
 
+@Profile("!oauth")
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -36,17 +38,15 @@ public class WebSecurityConfiguration {
             authorize
                 .requestMatchers("/auth/register").permitAll()
                 .requestMatchers("/auth/login").permitAll()
-                .requestMatchers("/users/details")
-                .access(authorityAuthorizationManager(ROLE_USER.getNameWithoutPrefix()))
-                .requestMatchers("/users/admin-details")
-                .access(authorityAuthorizationManager(ROLE_ADMIN.getNameWithoutPrefix()))
+                .requestMatchers("/users/details").access(authorityAuthorizationManager(ROLE_USER.getNameWithoutPrefix()))
+                .requestMatchers("/users/admin-details").access(authorityAuthorizationManager(ROLE_ADMIN.getNameWithoutPrefix()))
                 .requestMatchers("/**").authenticated()
         )
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-        .headers().frameOptions()
+        .headers().frameOptions() //to display h2-console //TODO: enable this header only for h2-console EP
         .sameOrigin()
-        .and() //to display h2-console //TODO: enable this header only for h2-console EP
+        .and()
         .logout().and()
         .addFilterBefore(authorizationFilter,
             org.springframework.security.web.access.intercept.AuthorizationFilter.class);

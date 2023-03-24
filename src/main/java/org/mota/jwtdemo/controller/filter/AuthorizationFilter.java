@@ -10,6 +10,7 @@ import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.mota.jwtdemo.service.JwtService;
 import org.mota.jwtdemo.service.UserService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Profile("!oauth")
 @Component
 @RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {

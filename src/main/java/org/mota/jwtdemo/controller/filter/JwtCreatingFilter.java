@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.mota.jwtdemo.service.UserService;
 import org.mota.jwtdemo.utils.JwtUtils;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
+@Profile("!oauth")
 @Component
 public class JwtCreatingFilter extends UsernamePasswordAuthenticationFilter {
 
