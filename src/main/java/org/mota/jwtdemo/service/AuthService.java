@@ -36,7 +36,7 @@ public class AuthService {
   public UserLoginDto login(UserLoginDto userLoginDto) {
     UserDetails userDetails = userService.loadUserByUsername(userLoginDto.getLogin());
     authenticationManager.authenticate(
-        new UsernamePasswordAuthenticationToken(userDetails.getUsername(),
+        new UsernamePasswordAuthenticationToken(userDetails,
             userDetails.getPassword(),
             userDetails.getAuthorities()));
 

@@ -17,7 +17,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Profile("jwt-old")
 public class JwtUtils {
 
-  private static final String SECRET_KEY = "?E(H+MbQeShVmYq3t6w9z$C&F)J@NcRf";
+  private JwtUtils() {
+
+  }
+
+  public static final String SECRET_KEY = "02uC0D7Yw1z4tVquxeq6lUjIUrXK+G02Y4fyax1FMe0=";
   private static final Date TOKEN_EXPIRATION_DATE = new Date(
       System.currentTimeMillis() + 1000 * 60 * 60 * 10);
   private static final Date REFRESH_TOKEN_EXPIRATION_DATE = new Date(
